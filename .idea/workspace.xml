@@ -4,9 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="5ccfbe92-3629-4345-a441-5abfd69b2233" name="Changes" comment="Changes">
-      <change beforePath="$PROJECT_DIR$/Procfile" beforeDir="false" afterPath="$PROJECT_DIR$/Procfile" afterDir="false" />
-    </list>
+    <list default="true" id="5ccfbe92-3629-4345-a441-5abfd69b2233" name="Changes" comment="Changes" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -98,7 +96,7 @@
       <option name="presentableId" value="Default" />
       <updated>1719376167600</updated>
       <workItem from="1719376603816" duration="293000" />
-      <workItem from="1719376905787" duration="3867000" />
+      <workItem from="1719376905787" duration="4495000" />
     </task>
     <task id="LOCAL-00001" summary="Changes">
       <option name="closed" value="true" />
