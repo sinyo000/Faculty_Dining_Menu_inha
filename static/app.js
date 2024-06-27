@@ -65,7 +65,7 @@ function App() {
     return (
         <div className="bg-sky-50 text-foreground p-8 md:p-12 lg:p-16">
             <div className="max-w-4xl mx-auto">
-                <h1 className="text-4xl font-bold mb-2 text-center">인하대 교직원식당 메뉴</h1>
+                <h1 className="text-4xl font-bold mb-2 text-center">인하대 학식 메뉴</h1>
                 <div className="flex items-center justify-between mb-4">
                     <button onClick={() => handleDateChange(-1)} className="rounded-lg bg-primary text-primary-foreground px-4 py-2">어제</button>
                     <p id="current-date" className="text-muted-foreground">{getFullDate(currentDate)}</p>
