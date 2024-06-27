@@ -3,67 +3,127 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>식단 정보</title>
+    <title>식단 메뉴</title>
     <style>
-        table {
-            width: 100%;
-            border-collapse: collapse;
-        }
-        th, td {
-            border: 1px solid #ddd;
-            padding: 8px;
-        }
-        th {
-            background-color: #f2f2f2;
-            text-align: left;
-        }
+        /* Tailwind CSS CDN */
+        @import 'https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.2.19/tailwind.min.css';
     </style>
 </head>
 <body>
-    <h1>식단 정보</h1>
-    <table id="menu-table">
-        <thead>
-            <tr>
-                <th>날짜</th>
-                <th>구분</th>
-                <th>메뉴</th>
-            </tr>
-        </thead>
-        <tbody>
-            <!-- 데이터가 여기에 삽입됩니다 -->
-        </tbody>
-    </table>
+    <div class="bg-background text-foreground p-8 md:p-12 lg:p-16">
+        <div class="max-w-4xl mx-auto">
+            <h1 class="text-4xl font-bold mb-2 text-center">식단 메뉴</h1>
+            <div class="flex items-center justify-between mb-4">
+                <button id="prev-day" class="bg-primary text-primary-foreground px-4 py-2 rounded-md">어제</button>
+                <p id="current-date" class="text-muted-foreground"></p>
+                <button id="next-day" class="bg-primary text-primary-foreground px-4 py-2 rounded-md">내일</button>
+            </div>
+            <div class="grid gap-12" id="menu-sections">
+                <!-- Sections will be dynamically inserted here -->
+            </div>
+        </div>
+    </div>
 
     <script>
-        fetch('/menu')
-            .then(response => {
-                if (!response.ok) {
-                    throw new Error('Network response was not ok');
+        function formatDate(date) {
+            const month = ("0" + (date.getMonth() + 1)).slice(-2);
+            const day = ("0" + date.getDate()).slice(-2);
+            return month + day;
+        }
+
+        function getFullDate(date) {
+            const options = { year: 'numeric', month: '2-digit', day: '2-digit', weekday: 'long' };
+            return new Intl.DateTimeFormat('ko-KR', options).format(date);
+        }
+
+        function updateDate(offset = 0) {
+            const currentDateElement = document.getElementById('current-date');
+            const currentDate = new Date(currentDateElement.dataset.date);
+            currentDate.setDate(currentDate.getDate() + offset);
+
+            currentDateElement.dataset.date = currentDate.toISOString().split('T')[0];
+            currentDateElement.textContent = getFullDate(currentDate);
+            fetchMenuData(currentDate);
+        }
+
+        function fetchMenuData(date) {
+            fetch('/menu')  // JSON 파일의 상대 경로 수정
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('Network response was not ok');
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    console.log('Received data:', data); // 디버깅을 위한 로그 추가
+                    const formattedDate = formatDate(date);
+                    console.log('Formatted Date:', formattedDate); // 디버깅을 위한 로그 추가
+                    displayMenu(data, formattedDate);
+                })
+                .catch(error => console.error('Error fetching data:', error));
+        }
+
+        function displayMenu(data, formattedDate) {
+            const menuSections = document.getElementById('menu-sections');
+            console.log('Display Menu Called with:', formattedDate); // 디버깅 로그 추가
+
+            const filteredData = data.filter(item => {
+                const itemDate = item.날짜.split(' ')[1].replace('(', '').replace(')', '').replace('.', '').trim();
+                const itemMonthDay = itemDate.slice(0, 2) + itemDate.slice(2, 4);
+                console.log('Item Date:', itemMonthDay); // 디버깅을 위한 로그 추가
+                return itemMonthDay === formattedDate;
+            });
+
+            console.log('Filtered Data:', filteredData); // 필터링된 데이터를 확인하기 위한 로그 추가
+
+            const sections = {
+                "중식 백반": [],
+                "중식 특식": [],
+                "석식": [],
+            };
+
+            filteredData.forEach(item => {
+                const category = item.구분.split('(')[0].trim();
+                console.log('Category:', category, 'Item:', item); // 추가 디버깅 로그
+                if (sections[category]) {
+                    sections[category].push(item);
                 }
-                return response.json();  // response를 JSON으로 파싱
-            })
-            .then(data => {
-                console.log('Received data:', data);
-                if (!Array.isArray(data)) {
-                    console.error('Expected an array but got:', data);
-                    throw new Error('Expected an array');
-                }
-                const tableBody = document.getElementById('menu-table').querySelector('tbody');
-                tableBody.innerHTML = ""; // 기존 내용을 초기화
-                data.forEach(item => {
-                    const row = document.createElement('tr');
-                    row.innerHTML = `
-                        <td>${item.날짜}</td>
-                        <td>${item.구분}</td>
-                        <td>${item.메뉴}</td>
+            });
+
+            menuSections.innerHTML = "";
+
+            Object.keys(sections).forEach(section => {
+                if (sections[section].length > 0) {
+                    const sectionElement = document.createElement('section');
+                    sectionElement.innerHTML = `
+                        <h2 class="text-2xl font-bold mb-4">${section}</h2>
+                        <div class="grid gap-6">
+                            ${sections[section].map(menuItem => `
+                                <div class="grid grid-cols-[1fr_auto] items-start gap-4">
+                                    <div>
+                                        <h3 class="text-lg font-medium">${menuItem.메뉴.split(',').map(menu => `<li>${menu.trim()}</li>`).join('')}</h3>
+                                    </div>
+                                    <p class="text-muted-foreground">${menuItem.구분.split('(')[1].split(')')[0]}</p>
+                                </div>
+                            `).join('')}
+                        </div>
                     `;
-                    tableBody.appendChild(row);
-                });
-            })
-            .catch(error => console.error('Error fetching data:', error));
+                    menuSections.appendChild(sectionElement);
+                }
+            });
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            const currentDateElement = document.getElementById('current-date');
+            const today = new Date();
+            currentDateElement.dataset.date = today.toISOString().split('T')[0];
+            currentDateElement.textContent = getFullDate(today);
+
+            document.getElementById('prev-day').addEventListener('click', () => updateDate(-1));
+            document.getElementById('next-day').addEventListener('click', () => updateDate(1));
+
+            fetchMenuData(today);
+        });
     </script>
 </body>
 </html>
-
-
-
