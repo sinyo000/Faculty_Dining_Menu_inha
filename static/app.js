@@ -1,5 +1,13 @@
 const { useState, useEffect } = React;
 
+const emojis = ['😍', '😋', '🤩', '🥰', '😎', '😋', '😙'];
+
+        // 주어진 배열에서 랜덤하게 하나의 이모티콘을 선택
+function getRandomEmoji() {
+    return emojis[Math.floor(Math.random() * emojis.length)];
+    }
+
+
 function formatDate(date) {
     const month = ("0" + (date.getMonth() + 1)).slice(-2);
     const day = ("0" + date.getDate()).slice(-2);
@@ -59,9 +67,9 @@ function App() {
             <div className="max-w-4xl mx-auto">
                 <h1 className="text-4xl font-bold mb-2 text-center">인하대 교직원식당 메뉴</h1>
                 <div className="flex items-center justify-between mb-4">
-                    <button onClick={() => handleDateChange(-1)} className="bg-primary text-primary-foreground px-4 py-2 rounded-md">어제</button>
+                    <button onClick={() => handleDateChange(-1)} className="rounded-lg bg-primary text-primary-foreground px-4 py-2">어제</button>
                     <p id="current-date" className="text-muted-foreground">{getFullDate(currentDate)}</p>
-                    <button onClick={() => handleDateChange(1)} className="bg-primary text-primary-foreground px-4 py-2 rounded-md">내일</button>
+                    <button onClick={() => handleDateChange(1)} className="rounded-xl bg-primary text-primary-foreground px-4 py-2">내일</button>
                 </div>
                 <div className="grid gap-12" id="menu-sections">
                     {filteredData.length > 0 ? filteredData.map((item, index) => (
@@ -69,10 +77,10 @@ function App() {
                             <h2 className="text-2xl font-bold mb-4">{item.구분.split('(')[0].trim()}</h2>
                             <div className="grid gap-6">
                                 {item.메뉴.split(',').map((menu, menuIndex) => (
-                                    <div key={menuIndex} className="drop-shadow-xl bg-white grid-cols-[1fr_auto] items-start gap-4">
+                                    <div key={menuIndex} className="p-3 bg-indigo-950 font-semibold rounded-md grid-cols-[1fr_auto] items-start gap-4">
                                         <div>
-                                            <ul className="list-none pl-4">
-                                                <li>{'😍' + menu.trim()}</li>
+                                            <ul className="pl-3-4 list-none text-blue-50">
+                                                <li>{getRandomEmoji() + ' ' + menu.trim()}</li>
                                             </ul>
                                         </div>
                                     </div>
