@@ -1,2 +1,2 @@
 web: gunicorn app:app
-worker Crolling_Menu.ipynb
+worker: python Crolling_Menu.py
