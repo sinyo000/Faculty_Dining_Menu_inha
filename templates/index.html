@@ -25,6 +25,8 @@
     </div>
 
     <script>
+        let menuData = [];
+
         function formatDate(date) {
             const month = ("0" + (date.getMonth() + 1)).slice(-2);
             const day = ("0" + date.getDate()).slice(-2);
@@ -38,12 +40,21 @@
 
         function updateDate(offset = 0) {
             const currentDateElement = document.getElementById('current-date');
-            const currentDate = new Date(currentDateElement.dataset.date);
+            let currentDate = new Date(currentDateElement.dataset.date);
             currentDate.setDate(currentDate.getDate() + offset);
+
+            // 주말을 패스하는 로직
+            if (currentDate.getDay() === 0) { // 일요일
+                currentDate.setDate(currentDate.getDate() + (offset > 0 ? 1 : -2));
+            } else if (currentDate.getDay() === 6) { // 토요일
+                currentDate.setDate(currentDate.getDate() + (offset > 0 ? 2 : -1));
+            }
+
+            const formattedDate = formatDate(currentDate);
 
             currentDateElement.dataset.date = currentDate.toISOString().split('T')[0];
             currentDateElement.textContent = getFullDate(currentDate);
-            fetchMenuData(currentDate);
+            displayMenu(menuData, formattedDate);
         }
 
         function fetchMenuData(date) {
@@ -55,6 +66,7 @@
                     return response.json();
                 })
                 .then(data => {
+                    menuData = data; // 전역 변수에 데이터 저장
                     console.log('Received data:', data); // 디버깅을 위한 로그 추가
                     const formattedDate = formatDate(date);
                     console.log('Formatted Date:', formattedDate); // 디버깅을 위한 로그 추가
@@ -101,7 +113,9 @@
                             ${sections[section].map(menuItem => `
                                 <div class="grid grid-cols-[1fr_auto] items-start gap-4">
                                     <div>
-                                        <h3 class="text-lg font-medium">${menuItem.메뉴.split(',').map(menu => `<li>${menu.trim()}</li>`).join('')}</h3>
+                                        <ul class="list-disc pl-4">
+                                            ${menuItem.메뉴.split(',').map(menu => `<li>${menu.trim()}</li>`).join('')}
+                                        </ul>
                                     </div>
                                     <p class="text-muted-foreground">${menuItem.구분.split('(')[1].split(')')[0]}</p>
                                 </div>
