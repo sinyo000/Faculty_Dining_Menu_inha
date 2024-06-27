@@ -1,4 +1,4 @@
-ㅊonst { useState, useEffect } = React;
+const { useState, useEffect } = React;
 
 function formatDate(date) {
     const month = ("0" + (date.getMonth() + 1)).slice(-2);
@@ -51,12 +51,6 @@ function App() {
         let date = new Date(startDate);
         while (true) {
             date.setDate(date.getDate() + step);
-            // 주말을 패스하는 로직
-            if (date.getDay() === 0) { // 일요일
-                date.setDate(date.getDate() + 1);
-            } else if (date.getDay() === 6) { // 토요일
-                date.setDate(date.getDate() + 2);
-            }
 
             const formattedDate = formatDate(date);
             const isValidDate = menuData.some(item => {

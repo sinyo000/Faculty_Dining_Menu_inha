@@ -1,7 +1,7 @@
 from flask import Flask, jsonify, render_template, send_from_directory
 import json
 
-app = Flask(__name__)
+app = Flask(__name__, static_folder='static', static_url_path='/static')
 
 # JSON 파일 경로 설정
 JSON_FILE_PATH = 'menu_data.json'

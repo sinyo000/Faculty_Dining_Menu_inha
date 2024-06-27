@@ -1,0 +1,18 @@
+{
+  "name": "faculty_dining_menu_inha",
+  "version": "1.0.0",
+  "description": "Faculty dining menu project",
+  "main": "index.js",
+  "scripts": {
+    "build:css": "tailwindcss -i ./static/styles.css -o ./static/output.css"
+  },
+  "type": "module",
+  "author": "Your Name",
+  "license": "MIT",
+  "devDependencies": {
+    "tailwindcss": "^3.4.4",
+    "postcss": "^8.4.16",
+    "autoprefixer": "^10.4.7",
+    "tailwindcss-animate": "^1.0.0"
+  }
+}
