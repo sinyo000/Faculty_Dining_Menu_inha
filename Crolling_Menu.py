@@ -89,6 +89,12 @@ for day_section in soup.select('.foodInfoWrap'):
             else:
                 meal['메뉴'] = ""
             week_data.append(meal)
+# 기존 JSON 파일 읽기
+try:
+    with open('menu_data.json', 'r', encoding='utf-8') as json_file:
+        existing_data = json.load(json_file)
+except FileNotFoundError:
+    existing_data = []
 
 # 기존 데이터와 새로운 데이터를 합치기 위한 사전 초기화
 combined_data_dict = {}
