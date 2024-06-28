@@ -16,11 +16,11 @@ def create_this_week_url(base_url, start_date_str):
     start_date = datetime.strptime(start_date_str, date_format)
 
     # 오늘 날짜 기준 저번 주 월요일 계산
-    last_week_monday = start_date - timedelta(days=start_date.weekday() + 7)
-    last_week_monday_str = last_week_monday.strftime(date_format)
+    last_week_sunday = start_date - timedelta(days=start_date.weekday() + 1)
+    last_week_sunday_str = last_week_sunday.strftime(date_format)
 
     # 인코딩된 문자열 생성
-    encoded_str = f"fnct1|@@|%2Fdiet%2Fkr%2F1%2Fview.do%3Fmonday%3D{last_week_monday_str}%26week%3Dnext%26"
+    encoded_str = f"fnct1|@@|%2Fdiet%2Fkr%2F1%2Fview.do%3Fmonday%3D{last_week_sunday_str}%26week%3Dnext%26"
 
     # Base64 인코딩
     encoded_bytes = base64.b64encode(encoded_str.encode('utf-8'))
@@ -90,10 +90,27 @@ for day_section in soup.select('.foodInfoWrap'):
                 meal['메뉴'] = ""
             week_data.append(meal)
 
+# 기존 데이터와 새로운 데이터를 합치기 위한 사전 초기화
+combined_data_dict = {}
+
+# 기존 데이터를 사전에 추가
+for item in existing_data:
+    key = f"{item['날짜']}-{item['구분']}"
+    combined_data_dict[key] = item
+
+# 새로운 데이터를 사전에 추가 (중복 제거)
+for item in week_data:
+    key = f"{item['날짜']}-{item['구분']}"
+    combined_data_dict[key] = item
+
+# 중복 제거된 데이터를 리스트로 변환
+combined_data = list(combined_data_dict.values())
+
+# 병합된 데이터 JSON 파일로 저장
+with open('menu_data.json', 'w', encoding='utf-8') as json_file:
+    json.dump(combined_data, json_file, ensure_ascii=False, indent=4)
+
+
 # 결과 JSON 변환
 json_data = json.dumps(week_data, ensure_ascii=False, indent=4)
 print(json_data)
-
-# JSON 파일로 저장
-with open('menu_data.json', 'w', encoding='utf-8') as json_file:
-    json.dump(week_data, json_file, ensure_ascii=False, indent=4)
