@@ -5,7 +5,12 @@ import json
 import base64
 import urllib.parse
 from datetime import datetime, timedelta
+import boto3
+import os
+from dotenv import load_dotenv
 
+# .env 파일에서 환경 변수를 로드합니다.
+load_dotenv()
 
 # URL 생성 함수
 def create_this_week_url(base_url, start_date_str):
@@ -16,7 +21,7 @@ def create_this_week_url(base_url, start_date_str):
     start_date = datetime.strptime(start_date_str, date_format)
 
     # 오늘 날짜 기준 저번 주 월요일 계산
-    last_week_sunday = start_date - timedelta(days=start_date.weekday() + 1)
+    last_week_sunday = start_date - timedelta(days=start_date.weekday() + 7)
     last_week_sunday_str = last_week_sunday.strftime(date_format)
 
     # 인코딩된 문자열 생성
@@ -89,34 +94,23 @@ for day_section in soup.select('.foodInfoWrap'):
             else:
                 meal['메뉴'] = ""
             week_data.append(meal)
-# 기존 JSON 파일 읽기
-try:
-    with open('menu_data.json', 'r', encoding='utf-8') as json_file:
-        existing_data = json.load(json_file)
-except FileNotFoundError:
-    existing_data = []
-
-# 기존 데이터와 새로운 데이터를 합치기 위한 사전 초기화
-combined_data_dict = {}
-
-# 기존 데이터를 사전에 추가
-for item in existing_data:
-    key = f"{item['날짜']}-{item['구분']}"
-    combined_data_dict[key] = item
-
-# 새로운 데이터를 사전에 추가 (중복 제거)
-for item in week_data:
-    key = f"{item['날짜']}-{item['구분']}"
-    combined_data_dict[key] = item
-
-# 중복 제거된 데이터를 리스트로 변환
-combined_data = list(combined_data_dict.values())
-
-# 병합된 데이터 JSON 파일로 저장
-with open('menu_data.json', 'w', encoding='utf-8') as json_file:
-    json.dump(combined_data, json_file, ensure_ascii=False, indent=4)
 
 
-# 결과 JSON 변환
-json_data = json.dumps(week_data, ensure_ascii=False, indent=4)
-print(json_data)
+# AWS S3에 업로드
+def upload_to_s3(file_name, data):
+    s3 = boto3.client(
+        's3',
+        aws_access_key_id=os.getenv('AWS_ACCESS_KEY_ID'),
+        aws_secret_access_key=os.getenv('AWS_SECRET_ACCESS_KEY')
+    )
+    bucket_name = os.getenv('S3_BUCKET_NAME')
+    if not bucket_name:
+        raise ValueError("S3_BUCKET_NAME environment variable is not set")
+
+    s3.put_object(Bucket=bucket_name, Key=file_name, Body=json.dumps(data, ensure_ascii=False, indent=4))
+    print(f"Data uploaded to S3 bucket {bucket_name} with key {file_name}")
+
+
+upload_to_s3('menu_data.json', week_data)
+print("JSON data:", json.dumps(week_data, ensure_ascii=False, indent=4))
+

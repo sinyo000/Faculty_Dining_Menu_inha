@@ -4,9 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="5ccfbe92-3629-4345-a441-5abfd69b2233" name="Changes" comment="Changes">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-    </list>
+    <list default="true" id="5ccfbe92-3629-4345-a441-5abfd69b2233" name="Changes" comment="Changes" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -114,6 +112,13 @@
       <workItem from="1719514337940" duration="8270000" />
       <workItem from="1719524091012" duration="6032000" />
       <workItem from="1719568002474" duration="1387000" />
+      <workItem from="1719790685454" duration="532000" />
+      <workItem from="1720153700741" duration="236000" />
+      <workItem from="1720367569619" duration="253000" />
+      <workItem from="1721016778496" duration="526000" />
+      <workItem from="1721030197077" duration="2522000" />
+      <workItem from="1721034191409" duration="11000" />
+      <workItem from="1721787866578" duration="3520000" />
     </task>
     <task id="LOCAL-00001" summary="Changes">
       <option name="closed" value="true" />
@@ -251,7 +256,39 @@
       <option name="project" value="LOCAL" />
       <updated>1719568810746</updated>
     </task>
-    <option name="localTasksCounter" value="18" />
+    <task id="LOCAL-00018" summary="Changes">
+      <option name="closed" value="true" />
+      <created>1719790726726</created>
+      <option name="number" value="00018" />
+      <option name="presentableId" value="LOCAL-00018" />
+      <option name="project" value="LOCAL" />
+      <updated>1719790726726</updated>
+    </task>
+    <task id="LOCAL-00019" summary="Changes">
+      <option name="closed" value="true" />
+      <created>1720367752529</created>
+      <option name="number" value="00019" />
+      <option name="presentableId" value="LOCAL-00019" />
+      <option name="project" value="LOCAL" />
+      <updated>1720367752529</updated>
+    </task>
+    <task id="LOCAL-00020" summary="Changes">
+      <option name="closed" value="true" />
+      <created>1721794851428</created>
+      <option name="number" value="00020" />
+      <option name="presentableId" value="LOCAL-00020" />
+      <option name="project" value="LOCAL" />
+      <updated>1721794851428</updated>
+    </task>
+    <task id="LOCAL-00021" summary="Changes">
+      <option name="closed" value="true" />
+      <created>1721795198032</created>
+      <option name="number" value="00021" />
+      <option name="presentableId" value="LOCAL-00021" />
+      <option name="project" value="LOCAL" />
+      <updated>1721795198032</updated>
+    </task>
+    <option name="localTasksCounter" value="22" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -262,7 +299,18 @@
     <MESSAGE value="Changes" />
     <option name="LAST_COMMIT_MESSAGE" value="Changes" />
   </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/Crolling_Menu.py</url>
+          <line>1</line>
+          <option name="timeStamp" value="1" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
+  </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
-    <SUITE FILE_PATH="coverage/Faculty_Dining_Menu_inha$Faculty_Dining_Menu_inha.coverage" NAME="Faculty_Dining_Menu_inha 커버리지 결과" MODIFIED="1719526498333" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/Faculty_Dining_Menu_inha$Faculty_Dining_Menu_inha.coverage" NAME="Faculty_Dining_Menu_inha 커버리지 결과" MODIFIED="1721794809964" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
   </component>
 </project>
