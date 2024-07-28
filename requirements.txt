@@ -104,3 +104,4 @@ websocket-client==1.8.0
 Werkzeug==3.0.3
 widgetsnbextension==4.0.11
 boto3==1.34.147
+pytz

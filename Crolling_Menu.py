@@ -8,9 +8,15 @@ from datetime import datetime, timedelta
 import boto3
 import os
 from dotenv import load_dotenv
+import pytz
 
 # .env 파일에서 환경 변수를 로드합니다.
 load_dotenv()
+
+# 환경 변수에서 시간대 가져오기
+timezone_str = os.getenv('TIMEZONE', 'UTC')
+tz = pytz.timezone(timezone_str)
+today_date_str = datetime.now(tz).strftime("%Y.%m.%d")
 
 # URL 생성 함수
 def create_this_week_url(base_url, start_date_str):
