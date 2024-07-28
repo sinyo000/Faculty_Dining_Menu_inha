@@ -20,6 +20,9 @@ timezone_str = os.getenv('TIMEZONE', 'UTC')
 tz = pytz.timezone(timezone_str)
 today_date_str = datetime.now(tz).strftime("%Y.%m.%d")
 
+print(f"Using timezone: {timezone_str}")
+print(f"Calculated date: {today_date_str}")
+
 # URL 생성 함수
 def create_this_week_url(base_url, start_date_str):
     # 날짜 형식 지정
