@@ -16,7 +16,7 @@ import pytz
 load_dotenv()
 
 # 환경 변수에서 시간대 가져오기
-timezone_str = os.getenv('TIMEZONE', 'UTC')
+timezone_str = os.getenv('TIMEZONE', 'Asia/Seoul')
 tz = pytz.timezone(timezone_str)
 today_date_str = datetime.now(tz).strftime("%Y.%m.%d")
 
@@ -32,7 +32,7 @@ def create_this_week_url(base_url, start_date_str):
     start_date = datetime.strptime(start_date_str, date_format)
 
     # 오늘 날짜 기준 저번 주 월요일 계산
-    last_week_sunday = start_date - timedelta(days=start_date.weekday() + 2)
+    last_week_sunday = start_date - timedelta(days=start_date.weekday() + 7)
     last_week_sunday_str = last_week_sunday.strftime(date_format)
 
     # 인코딩된 문자열 생성

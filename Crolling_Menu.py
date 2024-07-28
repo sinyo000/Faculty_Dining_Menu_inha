@@ -14,7 +14,7 @@ import pytz
 load_dotenv()
 
 # 환경 변수에서 시간대 가져오기
-timezone_str = os.getenv('TIMEZONE', 'UTC')
+timezone_str = os.getenv('TIMEZONE', 'Asia/Seoul')
 tz = pytz.timezone(timezone_str)
 today_date_str = datetime.now(tz).strftime("%Y.%m.%d")
 
