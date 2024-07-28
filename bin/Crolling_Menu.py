@@ -15,7 +15,7 @@ from dotenv import load_dotenv
 load_dotenv()
 
 # URL 생성 함수
-def create_this_week_url(base_url, start_date_str):heroku ru
+def create_this_week_url(base_url, start_date_str):
     # 날짜 형식 지정
     date_format = "%Y.%m.%d"
 
@@ -115,4 +115,3 @@ def upload_to_s3(file_name, data):
 
 upload_to_s3('menu_data.json', week_data)
 print("JSON data:", json.dumps(week_data, ensure_ascii=False, indent=4))
-
